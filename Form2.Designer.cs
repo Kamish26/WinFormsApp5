@@ -34,7 +34,9 @@
             label2 = new Label();
             button1 = new Button();
             textBox1 = new TextBox();
+            dataGridView2 = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             SuspendLayout();
             // 
             // dataGridView1
@@ -92,11 +94,22 @@
             textBox1.TabIndex = 6;
             textBox1.Visible = false;
             // 
+            // dataGridView2
+            // 
+            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView2.Location = new Point(26, 26);
+            dataGridView2.Name = "dataGridView2";
+            dataGridView2.RowTemplate.Height = 25;
+            dataGridView2.Size = new Size(361, 270);
+            dataGridView2.TabIndex = 7;
+            dataGridView2.SelectionChanged += dataGridView2_SelectionChanged;
+            // 
             // Form2
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(dataGridView2);
             Controls.Add(textBox1);
             Controls.Add(button1);
             Controls.Add(label2);
@@ -107,6 +120,7 @@
             Text = "Form2";
             Load += Form2_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -119,5 +133,6 @@
         private Label label2;
         private Button button1;
         private TextBox textBox1;
+        private DataGridView dataGridView2;
     }
 }
