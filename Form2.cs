@@ -14,10 +14,11 @@ namespace WinFormsApp5
 {
     public partial class Form2 : Form
     {
+        // public static object[] row = new object[2];
         public static string prodSel;
         public static int qtySel;
         public static string productSel;
-      
+        public static List<string> itemsCart = new List<string>();      
         public Form2()
         {
             InitializeComponent();
@@ -67,7 +68,7 @@ namespace WinFormsApp5
             SqlCommand command2 = new SqlCommand("SELECT Name from Production.Product WHERE Name = @Name", connection);
             command2.Parameters.AddWithValue("Name", prodSel);
 
-            DataTable dt2 = new DataTable();
+            DataTable dt2 = new DataTable(); 
 
             SqlDataAdapter adapter = new SqlDataAdapter(command2);
 
@@ -123,25 +124,35 @@ namespace WinFormsApp5
             string selProduct = comboBox1.SelectedValue.ToString();
             int selQty = int.Parse(textBox1.Text);
 
-            object[] row = { selProduct, selQty };
+            itemsCart.Add(selProduct + ":" + selQty);
+            
+            //foreach (DataGridViewRow dr in dataGridView1.Rows)
+            //{
+            //    itemsCart.Add(dr.Cells[0].Value.ToString());
+            //}
 
 
             Form3 form3 = Application.OpenForms.OfType<Form3>().FirstOrDefault();
 
-            if (form3 != null)
-            {
-                form3.AddRowToCart(row);
-            }
 
-            else
-            {
-                MessageBox.Show("Item Added to Cart");
-                form3 = new Form3(row);
-                form3.Show();
-            }
+            form3 = new Form3(itemsCart); 
+            //form3.AddRowToCart(itemsCart);
+            form3.Show();
 
-            
-            
+            //if (form3 != null)
+            //{
+            //    form3.AddRowToCart(row);
+            //}
+
+            //else
+            //{
+            //    MessageBox.Show("Item Added to Cart");
+            //    form3 = new Form3(row);
+            //    form3.Show();
+            //}
+
+
+
 
 
         }
