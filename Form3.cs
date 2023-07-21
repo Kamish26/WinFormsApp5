@@ -60,7 +60,7 @@ namespace WinFormsApp5
 
         public void TotalCostTextBox()
         {
-            string ConnectionString2 = @"Data Source=HQ-W10-L111\SQLEXPRESS; Initial Catalog=AdventureWorks2022; User ID = Kamish; Password = Welcome123!; TrustServerCertificate=True";
+            string ConnectionString2 = @"Data Source=HQ-W10-L111\SQLEXPRESS; Initial Catalog=AdventureWorks2022; User ID = Kamish2; Password = Welcome123!; TrustServerCertificate=True";
             SqlConnection connection = new SqlConnection(ConnectionString2);
             connection.Open();
 
@@ -74,9 +74,10 @@ namespace WinFormsApp5
                     Form2.productSel = row.Cells["Product"].Value.ToString();
                     Form2.qtySel = Convert.ToInt32(row.Cells["Quantity"].Value);
 
-                    SqlCommand command1 = new SqlCommand("SELECT ListPrice * @Quantity FROM Production.Product WHERE Name = @Name", connection);
-                    command1.Parameters.AddWithValue("@Name", Form2.productSel);
+                    SqlCommand command1 = new SqlCommand("EXEC GetQtyName @Quantity, @Name", connection);
                     command1.Parameters.AddWithValue("@Quantity", Form2.qtySel);
+                    command1.Parameters.AddWithValue("@Name", Form2.productSel);
+                    
 
                     DataTable dt3 = new DataTable();
 
@@ -114,7 +115,7 @@ namespace WinFormsApp5
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string ConnectionString3 = @"Data Source=HQ-W10-L111\SQLEXPRESS; Initial Catalog=AdventureWorks2022; User ID = Kamish; Password = Welcome123!; TrustServerCertificate=True";
+            string ConnectionString3 = @"Data Source=HQ-W10-L111\SQLEXPRESS; Initial Catalog=AdventureWorks2022; User ID = Kamish2; Password = Welcome123!; TrustServerCertificate=True";
             SqlConnection connection = new SqlConnection(ConnectionString3);
             connection.Open();
 
@@ -126,7 +127,7 @@ namespace WinFormsApp5
                     Form2.productSel = row1.Cells["Product"].Value.ToString();
                     Form2.qtySel = Convert.ToInt32(row1.Cells["Quantity"].Value);
 
-                    SqlCommand command3 = new SqlCommand("SELECT TOP 1 SalesOrderID FROM Sales.SalesOrderDetail ORDER BY SalesOrderID DESC", connection);
+                    SqlCommand command3 = new SqlCommand("SELECT * FROM top1Sales", connection);
                     DataTable dt4 = new DataTable();
 
                     SqlDataAdapter adapter = new SqlDataAdapter(command3);
@@ -136,11 +137,11 @@ namespace WinFormsApp5
                     int SalesID = Convert.ToInt32(dt4.Rows[0].ItemArray[0]);
 
 
-                    SqlCommand command2 = new SqlCommand("INSERT INTO Sales.SalesOrderDetail(SalesOrderID, OrderQty, ProductID, SpecialOfferID, " +
-                        "UnitPrice, UnitPriceDiscount) VALUES(@SalesID, @Quantity, (SELECT ProductID FROM Production.Product WHERE Name = @Name), 1, (SELECT ListPrice FROM Production.Product WHERE Name = @Name), 0.00) ", connection);
+                    SqlCommand command2 = new SqlCommand("EXEC GetSalesInfo @SalesID, @Quantity, @Name", connection);
                     command2.Parameters.AddWithValue("@SalesID", SalesID + 1);
-                    command2.Parameters.AddWithValue("@Name", Form2.productSel);
                     command2.Parameters.AddWithValue("@Quantity", Form2.qtySel);
+                    command2.Parameters.AddWithValue("@Name", Form2.productSel);
+                    
                     command2.CommandTimeout = 400;
 
 

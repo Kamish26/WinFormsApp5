@@ -26,12 +26,12 @@ namespace WinFormsApp5
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            string ConnectionString = @"Data Source=HQ-W10-L111\SQLEXPRESS; Initial Catalog=AdventureWorks2022; User ID = Kamish; Password = Welcome123!; TrustServerCertificate=True";
+            string ConnectionString = @"Data Source=HQ-W10-L111\SQLEXPRESS; Initial Catalog=AdventureWorks2022; User ID = Kamish2; Password = Welcome123!; TrustServerCertificate=True";
             SqlConnection connection = new SqlConnection(ConnectionString);
 
             connection.Open();
 
-            SqlCommand cmd = new SqlCommand("SELECT Top 25 Name from Production.Product WHERE ListPrice != 0", connection);
+            SqlCommand cmd = new SqlCommand("SELECT * FROM top25", connection);
 
             DataTable dt = new DataTable();
 
@@ -55,7 +55,7 @@ namespace WinFormsApp5
         {
             prodSel = comboBox1.SelectedValue.ToString();
 
-            string ConnectionString2 = @"Data Source=HQ-W10-L111\SQLEXPRESS; Initial Catalog=AdventureWorks2022; User ID = Kamish; Password = Welcome123!; TrustServerCertificate=True";
+            string ConnectionString2 = @"Data Source=HQ-W10-L111\SQLEXPRESS; Initial Catalog=AdventureWorks2022; User ID = Kamish2; Password = Welcome123!; TrustServerCertificate=True";
             SqlConnection connection = new SqlConnection(ConnectionString2);
             connection.Open();
 
@@ -65,7 +65,7 @@ namespace WinFormsApp5
             }
 
 
-            SqlCommand command2 = new SqlCommand("SELECT Name from Production.Product WHERE Name = @Name", connection);
+            SqlCommand command2 = new SqlCommand("EXEC GetProdName @Name", connection);
             command2.Parameters.AddWithValue("Name", prodSel);
 
             DataTable dt2 = new DataTable(); 

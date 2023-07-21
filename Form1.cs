@@ -22,12 +22,12 @@ namespace WinFormsApp5
             string user = textBox1.Text;
             string pswd = textBox2.Text;
 
-            string ConnectionString = @"Data Source=HQ-W10-L111\SQLEXPRESS; Initial Catalog=AdventureWorks2022; User ID = Kamish; Password = Welcome123!; TrustServerCertificate=True";
+            string ConnectionString = @"Data Source=HQ-W10-L111\SQLEXPRESS; Initial Catalog=AdventureWorks2022; User ID = Kamish2; Password = Welcome123!; TrustServerCertificate=True";
             SqlConnection connection = new SqlConnection(ConnectionString);
 
             connection.Open();
 
-            SqlCommand command = new SqlCommand("Select * FROM Person.Person WHERE FirstName = @user AND LastName = @pswd ", connection);
+            SqlCommand command = new SqlCommand("EXEC GetUserCred @user, @pswd ", connection);
             command.Parameters.AddWithValue("@user", user);
             command.Parameters.AddWithValue("@pswd", pswd);
 
